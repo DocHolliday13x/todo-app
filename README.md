@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# LAB - Class 31
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project: todo-app
 
-## Available Scripts
+### Author: Ryan Eastman
 
-In the project directory, you can run:
+### Colloborators
 
-### `npm start`
+- Ryan Gallaway
+- Reece Renninger
+- Ike Steoger
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Problem Domain  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Currently, a user can add todo tasks to the proof-of-life starter application. In this phase, we will add hard-wired, default context settings to the application so that the user can view three incomplete todo tasks. In addition, the user will have the option of viewing any additional incomplete tasks by using pagination functionality.
 
-### `npm test`
+*Phase 1*: The goal for this lab is to incorporate configuration settings to the application. We will be using the React Context API to accomplish this task. The application will be able to read the number of items to display per screen from the context. In addition, the application will be able to read the current page number from the context. The application will also be able to update the current page number in the context. We’re going to perform some refactoring of a Todo application built by another team. This application mixes application state and user settings at the top level and passes things around. It was a good proof of concept, but we need to make this production ready.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Create a Detailed UML.
+- Properly modularize the application into separate components, note the proposed file structure below.
+- Implement the Context API to make some basic application settings available to components.
+  - Show three items by default.
+  - Hide completed items by default.
+  - Add the sort word ‘difficulty’ by default.
+- Style the application using the Mantine Component API{target:_blank}.
+  - **NOTE**: The expectation to style this entire component in one day is likely unrealistic. The recommendation is to implement the required functionality, then systematically begin styling with Mantine. Match the comp image(s) as closely as possible. 80% of the design work will likely take 20% of your time. By the end of the week, being mostly there with style is the goal!
 
-### `npm run build`
+### Links and Resources
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [GitHub Actions ci/cd](http://xyz.com) (when applicable)
+- [How to Use React Context API](https://www.freecodecamp.org/news/context-api-in-react/)
+<!-- - [back-end server url](http://xyz.com) (when applicable)
+- [front-end application](http://xyz.com) (when applicable) -->
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Collaborators
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Setup
 
-### `npm run eject`
+1. Use Create React App (CRA) to create a new application named todo-app.
+2. `npx create-react-app todo-app`
+3. Delete the existing src directory.
+4. Paste in the src directory from the lab/starter-code.
+5. Run `npm install uuid sass`.
+6. `npm start` and confirm that the application loads in the browser.
+7. Create an EMPTY GitHub Repository named todo-app.
+8. Follow GitHub instructions labeled “…or push an existing repository from the command line”.
+**Note**: after completeing the above step, CRA starter code will have been pushed to your GitHub Repo.
+9. Immediately ACP after adding your newly created repo to GitHub; this will add the starter-code to your repo and give you the option to rollback changes to the base starter code if necessary.
+10. Create and work in a new branch for today called context-settings.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+#### `.env` requirements (where applicable)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+for now I have none and do not require one
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### How to initialize/run your application (where applicable)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. Clone down the repo.
+2. Initialize your application using `npm start`.
+3. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Learn More
+#### How to use your library (where applicable)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Features / Routes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Feature One: Details of feature
+- GET : `/hello` - specific route to hit
 
-### Code Splitting
+#### Tests
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- How do you run tests?
+- Any tests of note?
+- Describe any tests that you did not complete, skipped, etc
 
-### Analyzing the Bundle Size
+#### UML
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Lab 31: Phase 1**
+- ![UML](./assets/lab31UML.png)
