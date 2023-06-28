@@ -13,4 +13,4 @@ describe('ToDo Component Tests', ()  => {
     expect(header).toBeInTheDocument();
     expect(h1).toHaveTextContent('To Do List: 0 items pending');
   })
-})
+});
