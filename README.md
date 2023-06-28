@@ -87,8 +87,8 @@ for now I have none and do not require one
 
 #### Features / Routes
 
-- Feature One: Details of feature
-- GET : `/hello` - specific route to hit
+- `/` - Home Page
+- `/settings` - Settings Page (not required for lab 31)
 
 #### Tests
 
