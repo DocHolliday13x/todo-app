@@ -1,28 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
+
 
 // create context
 export const ModeContext = React.createContext();
 
 // create a provider
 function ModeProvider({ children }){
-  const [mode, setMode] = React.useState('light');
+  const [colorScheme, setColorScheme] = useState('dark');
 
-  //we can 'do the thing' to make calculations, etc
-  // useReducer to micro-manage state
-
-  const toggleMode = () => {
-    setMode( mode === 'light' ? 'dark' : 'light' );
+  const toggleColorScheme = () => {
+    setColorScheme(colorScheme === 'dark' ? 'dark' : 'light' );
   }
 
   const state = {
-    mode,
-    toggleMode,
+    colorScheme,
+    toggleColorScheme,
   }
 
+
   return (
-    <ModeContext.Provider value={state}>
-      {children}
-    </ModeContext.Provider>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        <ModeContext.Provider value={state}>
+          {children}
+        </ModeContext.Provider>
+      </MantineProvider>
+    </ColorSchemeProvider>
   )
 }
 

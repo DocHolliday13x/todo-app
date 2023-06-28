@@ -53,8 +53,9 @@ const Todo = () => {
         <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
       </header>
 
+      <form onSubmit={handleSubmit}> 
       {/* leave the form code inside of the Todo Component */}
-      <form onSubmit={handleSubmit}>
+      {/* DO NOT COMPONENTIZE BEFORE LAB 34 */}
 
         <h2>Add To Do Item</h2>
 
@@ -89,9 +90,8 @@ const Todo = () => {
       ))} */}
 
       <List 
-        data={list}
+        list={list}
         toggleComplete={toggleComplete}
-        deleteItem={deleteItem}
       />
 
     </>
