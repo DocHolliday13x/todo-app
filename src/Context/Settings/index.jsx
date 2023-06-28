@@ -4,11 +4,11 @@ import React from 'react';
 export const SettingsContext = React.createContext(); 
 
 // create a provider
-function SettingsProvider(children){
+function SettingsProvider({ children }){
   // const [title, setTitle] = React.useState('Some Site');
   // const [email, setEmail] = React.useState('nomad@codefellows.com');
   const [pageItems, setPageItems] = React.useState(3);
-  const [displayCompleted, setDisplayCompleted] = React.useState(true);
+  const [displayCompleted, setDisplayCompleted] = React.useState(false);
   const [sort, setSort] = React.useState('difficulty');
 
   //we can 'do the thing' to make calculations, etc

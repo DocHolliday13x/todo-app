@@ -25,6 +25,7 @@ Currently, a user can add todo tasks to the proof-of-life starter application. I
 <!-- - [back-end server url](http://xyz.com) (when applicable)
 - [front-end application](http://xyz.com) (when applicable) -->
 - [How to Use React Context API](https://www.freecodecamp.org/news/context-api-in-react/)
+- [Mantine Component API](https://mantine.dev/pages/getting-started/)
 
 ### Collaborators
 

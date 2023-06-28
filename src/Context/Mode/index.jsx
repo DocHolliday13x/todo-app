@@ -4,7 +4,7 @@ import React from 'react';
 export const ModeContext = React.createContext();
 
 // create a provider
-function ModeProvider(props){
+function ModeProvider({ children }){
   const [mode, setMode] = React.useState('light');
 
   //we can 'do the thing' to make calculations, etc
@@ -21,7 +21,7 @@ function ModeProvider(props){
 
   return (
     <ModeContext.Provider value={state}>
-      {props.children}
+      {children}
     </ModeContext.Provider>
   )
 }
