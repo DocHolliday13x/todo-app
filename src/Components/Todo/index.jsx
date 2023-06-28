@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/form';
 
 import { v4 as uuid } from 'uuid';
+import { List } from '@mantine/core';
 
 const Todo = () => {
 
@@ -77,7 +78,7 @@ const Todo = () => {
         </label>
       </form>
 
-      {list.map(item => (
+      {/* {list.map(item => (
         <div key={item.id}>
           <p>{item.text}</p>
           <p><small>Assigned to: {item.assignee}</small></p>
@@ -85,7 +86,13 @@ const Todo = () => {
           <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
           <hr />
         </div>
-      ))}
+      ))} */}
+
+      <List 
+        data={list}
+        toggleComplete={toggleComplete}
+        deleteItem={deleteItem}
+      />
 
     </>
   );
