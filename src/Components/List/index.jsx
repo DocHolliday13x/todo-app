@@ -1,46 +1,48 @@
-import React from 'react';
+import { useContext, useState } from 'react';
 import { SettingsContext } from '../../Context/Settings';
-import { Pagination } from '@mantine/core';
+import { Pagination, Card, Button, Text } from '@mantine/core';
 
-const List = (props) => {
-  const [currentPage, setCurrentPage] = React.useState(1);
-  const [pageItems, displayCompleted, sort] = React.useContext(SettingsContext);
-  const totalPages = Math.ceil(props.list.length / pageItems);
+function List ({list, toggleComplete}) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageItems, displayCompleted] = useContext(SettingsContext);
   
-  const displayItems = displayCompleted ? props.list : props.list.filter(item => !item.complete);
+  const displayItems = displayCompleted ? list : list.filter(item => !item.complete);
+
+  const totalPages = Math.ceil(displayItems.length / pageItems);
 
   const start = (currentPage - 1) * pageItems;
   const end = start + pageItems;
   const page = displayItems.slice(start, end);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  }
+  
 
   return (
     <>
-      <ul>
+
+      <Card shadow="sm" padding="sm" radius="md" style={{ marginTop: '1rem' }}>
+        <Card.Section>
+
         {page.map(item => (
-          <li key={item._id}>
-            <span onClick={() => props.handleComplete(item._id)}>
-              {item.complete ? 'complete' : 'incomplete'}
-            </span>
-            <span onClick={() => props.handleDelete(item._id)}>
-              {item.text}
-            </span>
-            <span onClick={() => props.handleEdit(item._id)}>
-              edit
-            </span>
-          </li>
+          <div key={item._id}>  
+          <Text>{item.text}</Text>
+          <Text><small>Assigned To: {item.assignee}</small></Text>
+          <Text><small>Difficulty: {item.difficulty}</small></Text>
+          <Button onClick={() => toggleComplete(item._id)}>{item.complete ? 'Complete' : 'Pending'}</Button>
+          <hr />
+          </div>
+
         ))}
-      </ul>
+        </Card.Section>
+      
       <Pagination
         style={{ marginTop: '1rem' }}
         size="md"
         total={totalPages}
         value={currentPage}
-        onChange={handlePageChange}
+        onChange={(value) => setCurrentPage(value)}
       />
+      </Card>
+      
     </>
   )
 }

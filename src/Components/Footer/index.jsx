@@ -1,6 +1,6 @@
 const Footer = (props) => {
   return (
-    <footer>
+    <footer data-testid="footer-test">
       <p>© 2023 Code Fellows</p>
     </footer>
   );
