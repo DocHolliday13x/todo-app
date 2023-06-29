@@ -5,14 +5,18 @@ export const SettingsContext = React.createContext();
 
 // create a provider
 function SettingsProvider({ children }){
-  // const [title, setTitle] = React.useState('Some Site');
-  // const [email, setEmail] = React.useState('nomad@codefellows.com');
   const [pageItems, setPageItems] = React.useState(3);
   const [displayCompleted, setDisplayCompleted] = React.useState(false);
   const [sort, setSort] = React.useState('difficulty');
 
-  //we can 'do the thing' to make calculations, etc
-  // useReducer to micro-manage state
+  // local storage
+  const saveLocalStorage = () => {
+    localStorage.setItem('settings', JSON.stringify({ pageItems, displayCompleted, sort }));
+    localStorage.setItem('pageItems', JSON.stringify(pageItems));
+    localStorage.setItem('displayCompleted', JSON.stringify(displayCompleted));
+    localStorage.setItem('sort', JSON.stringify(sort));
+  };
+
 
   const values = {
     pageItems,
@@ -20,8 +24,18 @@ function SettingsProvider({ children }){
     sort,
     setSort,
     setPageItems,
-    setDisplayCompleted
+    setDisplayCompleted,
+    saveLocalStorage // add this to the values object
   }
+
+  React.useEffect(() => {
+    const settings = JSON.parse(localStorage.getItem('settings'));
+    if (settings) {
+      setPageItems(settings.pageItems);
+      setDisplayCompleted(settings.displayCompleted);
+      setSort(settings.sort);
+    }
+  }, []);
 
   return (
     <SettingsContext.Provider value={values}>

@@ -1,42 +1,39 @@
-import React, { useContext } from 'react';
-import { ModeContext } from '../../Context/Mode';
-import { ActionIcon } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { createStyles, Navbar, Button } from "@mantine/core";
+import { Link } from "react-router-dom";
 
-export default function Header() {
-  const { colorScheme, toggleColorScheme } = useContext(ModeContext);
+const styles = createStyles((theme) => ({
+  headerNav: {
+    backgroundColor: theme.colors.blue[6],
+    color: theme.colors.gray[0],
+    height: '100%',
+    margin: 'auto',
+    display: 'flex',
+    flexFlow: 'row wrap',
+    gap: '10px',
+    fontSize: '16px',
+    boxSizing: 'border-box',
+    padding: theme.spacing.md,
+  }
+}));
 
-  const dark = colorScheme === 'dark';
+function Header(props) {
+  
+  const { classes } = styles();
 
   return (
-    <header>
-      <h1>Todo App</h1>
-      
-      {/* Render the dark/light mode toggle button */}
-      <ActionIcon
-        variant="outline"
-        color={dark ? 'yellow' : 'blue'}
-        onClick={() => toggleColorScheme()}
-        title="Toggle color scheme"
-      >
-        {dark ? <IconSun size="1.1rem" /> : <IconMoonStars size="1.1rem" />}
-      </ActionIcon>
-    </header>
+<>
+<Navbar className={classes.headerNav}>
+  <Link to='/'>Home</Link>
+  <Link to='/settings'>Settings</Link>
+<Button>Log Out</Button>
+</Navbar>
+
+</>
   );
 }
 
+export default Header;
 
-
-
-
-
-// const Header = (props) => {
-//   return (
-//     <header>
-//       <h1>My Todo List</h1>
-//     </header>
-//   );
-// }
 
 
 
