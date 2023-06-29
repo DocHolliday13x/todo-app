@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { SettingsContext } from '../../Context/Settings';
 import { createStyles, Button, Checkbox, TextInput, Text } from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
+import { When } from 'react-if'; // We have to bring this in with `npm i react-if` from react-if for our grid to display properly
 
 const useStyles = createStyles((theme) => ({
   h1: {
@@ -28,7 +29,7 @@ const useStyles = createStyles((theme) => ({
 const SettingsForm = (event) => {
 
   const { pageItems, setPageItems, displayCompleted, setDisplayCompleted, sort, setSort, saveLocalStorage } = useContext(SettingsContext);
-  const { showUpdate, setShowUpdate } = useState(false);
+  const { showUpdate, setShowUpdate } = useState(false); // We need to bring in useState from react to use this
 
   const classes = useStyles();
 
@@ -70,6 +71,7 @@ const SettingsForm = (event) => {
           </form>
         </section>
 
+        <When condition={showUpdate}> {/* We need to bring in When from react-if to use this */}
         showUpdate && (
           <section className={classes.section}>
             <h3>Settings Saved</h3>
@@ -77,6 +79,7 @@ const SettingsForm = (event) => {
             <Text>Items Per Page: {pageItems}</Text>
             <Text>Sort Field: {sort.field}</Text>
           </section>
+          </When>
         )
       </div>
 
