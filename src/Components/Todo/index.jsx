@@ -4,7 +4,7 @@ import useForm from '../../hooks/form';
 import { v4 as uuid } from 'uuid';
 import List from '../List';
 
-import { Grid, TextInput, Button, Text, createStyles, Slider } from '@mantine/core';
+import { Grid, TextInput, Button, createStyles, Slider } from '@mantine/core';
 
 const styles = createStyles((theme) => ({
   todoForm: {

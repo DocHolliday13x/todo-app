@@ -42,7 +42,7 @@ const SettingsForm = (event) => {
     <>
 
       <h1 className={classes.h1}><IconSettings /> Manage Settings </h1>
-      
+
       <div className={classes.div}>
         <section className={classes.section}>
           <h3>Update Settings</h3>
@@ -81,6 +81,12 @@ const SettingsForm = (event) => {
       </div>
 
     </>
+  )
+};
+
+
+
+export default SettingsForm;
 
 
 
