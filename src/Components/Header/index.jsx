@@ -6,17 +6,17 @@ const styles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[6],
     color: theme.colors.gray[0],
     height: '100%',
-    margin: 'auto',
-    display: 'flex',
-    flexFlow: 'row wrap',
-    gap: '10px',
+    // margin: 'auto',
+    // display: 'flex',
+    // flexFlow: 'row wrap',
+    // gap: '10px',
     fontSize: '16px',
-    boxSizing: 'border-box',
+    // boxSizing: 'border-box',
     padding: theme.spacing.md,
   }
 }));
 
-function Header(props) {
+function Header() {
   
   const { classes } = styles();
 
