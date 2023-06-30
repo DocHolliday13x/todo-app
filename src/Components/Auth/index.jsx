@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { AuthContext } from '../../Context/AuthContext';
+import { AuthContext } from '../../Context/Auth/index.jsx';
 import { When } from 'react-if'; // npm i react-if
 
 function Auth ({ children, capability }) {
