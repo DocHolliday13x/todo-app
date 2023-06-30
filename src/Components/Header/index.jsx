@@ -10,9 +10,14 @@ const styles = createStyles((theme) => ({
     // display: 'flex',
     // flexFlow: 'row wrap',
     // gap: '10px',
-    fontSize: '16px',
+    fontSize: theme.fontSizes.md,
     // boxSizing: 'border-box',
     padding: theme.spacing.md,
+  },
+  link: {
+    color: theme.colors.gray[0],
+    fontSize: theme.fontSizes.md,
+    textDecoration: 'none',
   }
 }));
 
@@ -20,11 +25,11 @@ function Header() {
   
   const { classes } = styles();
 
-  return (
+  return ( 
 <>
 <Navbar className={classes.headerNav}>
-  <Link to='/'>Home</Link>
-  <Link to='/settings'>Settings</Link>
+  <Link to='/' classes={classes.link}>Home</Link>
+  <Link to='/settings' classes={classes.link}>Settings</Link>
 <Button>Log Out</Button>
 </Navbar>
 
