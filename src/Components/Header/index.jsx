@@ -6,25 +6,30 @@ const styles = createStyles((theme) => ({
     backgroundColor: theme.colors.blue[6],
     color: theme.colors.gray[0],
     height: '100%',
-    margin: 'auto',
-    display: 'flex',
-    flexFlow: 'row wrap',
-    gap: '10px',
-    fontSize: '16px',
-    boxSizing: 'border-box',
+    // margin: 'auto',
+    // display: 'flex',
+    // flexFlow: 'row wrap',
+    // gap: '10px',
+    fontSize: theme.fontSizes.md,
+    // boxSizing: 'border-box',
     padding: theme.spacing.md,
+  },
+  link: {
+    color: theme.colors.gray[0],
+    fontSize: theme.fontSizes.md,
+    textDecoration: 'none',
   }
 }));
 
-function Header(props) {
+function Header() {
   
   const { classes } = styles();
 
-  return (
+  return ( 
 <>
 <Navbar className={classes.headerNav}>
-  <Link to='/'>Home</Link>
-  <Link to='/settings'>Settings</Link>
+  <Link to='/' classes={classes.link}>Home</Link>
+  <Link to='/settings' classes={classes.link}>Settings</Link>
 <Button>Log Out</Button>
 </Navbar>
 

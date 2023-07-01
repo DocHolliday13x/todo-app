@@ -29,6 +29,8 @@ Currently, a user can add todo tasks to the proof-of-life starter application. I
 
 **Phase 3**: The goal for this lab is to add security and access controls to the application. In this final phase, we'll be requring that users be logged in, in order to do the items. Additionally, based on their user type, they will be allowed (or denied) to perform actions such as editing or deleting them.
 
+**Phase 4**: The goal for this lab is to integrate the application with a live API server. In this final phase, we’ll be requiring that users be logged in through a live authentication server, in order to see the to do items. Additionally, based on their user type, they will be allowed (or denied) to perform actions such as editing or deleting them. All To Do items will be stored in a database, accessed through a deployed API.
+
 ### Links and Resources
 
 - [GitHub Actions ci/cd](https://github.com/DocHolliday13x/todo-app/actions/)
@@ -71,6 +73,13 @@ Currently, a user can add todo tasks to the proof-of-life starter application. I
 1. Continue working in the same repository from the previous phase.
 2. Create and work in a new branch for today called phase3.
 3. Extend the functionality of the application to require users to be logged in to perform actions such as editing or deleting items.
+
+**Phase 4**:
+
+1. Continue working in the same repository from the previous phase.
+2. Create and work in a new branch for today called phase4.
+3. Extend the functionality of the application to require users to be logged in to perform actions such as editing or deleting items.
+4. Finalize the functionality of the application by connecting it to a live API server for login, authorization, and data access.
 
 ### Technical Requirements / Notes
 
@@ -138,6 +147,35 @@ Currently, a user can add todo tasks to the proof-of-life starter application. I
    - If a user returns and has a valid login cookie, hide the login form and consider them “Logged In”.
      - Display a logout button instead of a form if they are “Logged In”.
 
+**Phase 4**:
+
+1. Alter the Add, Toggle Complete, and Delete functions within your to do application to use your API instead of in memory state.
+   - Fetch the current list of items from the database on application start.
+   - Whenever you add/update/delete an item, refresh the state so the user can instantly see the change.
+     - Consider: Do you re-fetch from the server every time you make a change?
+       - If so, how?
+       - If not, how will you stay in sync?
+
+2. Alter the Login Context to use the server to login users instead of our mock users list.
+   - Be sure to store the token in state as well as in a cookie so you can reference it later.
+
+3. You will need deployed API Server, which implements a todo item data model.
+   - `GET /todo`: Gets a list of all items.
+   - `POST /todo`: Adds an item.
+   - `PUT /todo`: Updates an item (you’ll use this to mark them as complete).
+   - `DELETE /todo/:id` : Deletes an item.
+
+4. You will need a deployed Authenticated API Server, which supports:
+   - Registration (/signup).
+   - Login (/signin).
+   - Authorization (via Bearer Token).
+   - ACL (using user roles).
+     - Make sure you have created the user roles and permissions lists that your front-end is expecting to tap into.
+   - To Do data model for storing the actual to do items.
+
+5. *Stretch Goal* - Use authorization middleware on the server to add another layer of protection, so that only users with the correct permissions can POST/UPDATE/DELETE.
+   - If you choose to do this, you'll need to send a bearer token with every request.
+
 #### `.env` requirements (where applicable)
 
 for now I have none and do not require one
@@ -173,3 +211,6 @@ for now I have none and do not require one
 
 - **Lab 33: Phase 3**
 - ![UML](/public/lab33UML.png)
+
+- **Lab 34: Phase 4**
+- ![UML](/public/lab34UML.png)
