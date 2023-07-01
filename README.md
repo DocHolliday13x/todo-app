@@ -211,3 +211,6 @@ for now I have none and do not require one
 
 - **Lab 33: Phase 3**
 - ![UML](/public/lab33UML.png)
+
+- **Lab 34: Phase 4**
+- ![UML](/public/lab34UML.png)
