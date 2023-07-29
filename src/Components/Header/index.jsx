@@ -1,41 +1,46 @@
-import { createStyles, Navbar, Button } from "@mantine/core";
+import { createStyles, Navbar, Group } from "@mantine/core";
 import { Link } from "react-router-dom";
+import Login from "../Login";
 
 const styles = createStyles((theme) => ({
   headerNav: {
     backgroundColor: theme.colors.blue[6],
     color: theme.colors.gray[0],
     height: '100%',
-    // margin: 'auto',
-    // display: 'flex',
-    // flexFlow: 'row wrap',
-    // gap: '10px',
-    fontSize: theme.fontSizes.md,
-    // boxSizing: 'border-box',
-    padding: theme.spacing.md,
+    margin: 'auto',
+    fontSize: '16px',
+    padding: theme.spacing.sm,
   },
-  link: {
+  links: {
     color: theme.colors.gray[0],
     fontSize: theme.fontSizes.md,
     textDecoration: 'none',
   }
 }));
 
-function Header() {
-  
+function Header(props) {
+
   const { classes } = styles();
 
-  return ( 
-<>
-<Navbar className={classes.headerNav}>
-  <Link to='/' classes={classes.link}>Home</Link>
-  <Link to='/settings' classes={classes.link}>Settings</Link>
-<Button>Log Out</Button>
-</Navbar>
+  return (
+    <>
+      <Navbar className={classes.headerNav}>
 
-</>
+        <Group position='left'>
+          <Link className={classes.links} to='/'>Home</Link>
+          <Link className={classes.links} to='/settings'>Settings</Link>
+        </Group>
+
+        <Group position='right'>
+          <Login />
+        </Group>
+
+      </Navbar>
+
+    </>
   );
 }
+
 
 export default Header;
 
