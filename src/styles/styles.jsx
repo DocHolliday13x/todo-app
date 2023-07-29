@@ -1,19 +1,21 @@
 import { createStyles } from '@mantine/core';
 
 const styles = createStyles((theme) => ({
-  settingsHeader: {
+  userSettingsHeader: {
     backgroundColor: theme.colors.gray[8],
     color: theme.colors.gray[0],
-    fontSize: '16px',
-    margin: '16 px auto',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    margin: '16px auto',
     padding: '16px',
     width: '80%',
   },
   todo: {
     backgroundColor: theme.colors.gray[8],
     color: theme.colors.gray[0],
-    fontSize: '16px',
-    margin: '16 px auto',
+    fontSize: '20px',
+    fontWeight: 'bold',
+    margin: '16px auto',
     padding: '16px',
     width: '80%',
   },
@@ -25,12 +27,13 @@ const styles = createStyles((theme) => ({
     display: 'flex',
     flexFlow: 'row wrap',
     gap: '10px',
+    // justifyContent: 'space-evenly',
     fontSize: '16px',
     boxSizing: 'border-box',
     padding: theme.spacing.md,
   },
   footer: {
-    textAlign: 'right',
+    textAlign:'right',
     width: '80%',
     margin: 'auto',
   }
