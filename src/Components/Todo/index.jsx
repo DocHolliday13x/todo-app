@@ -1,60 +1,82 @@
+import axios from 'axios';
+import Auth from '../Auth';
+import List from '../List';
 import React, { useEffect, useState } from 'react';
 import useForm from '../../hooks/form';
+// import { v4 as uuid } from 'uuid';
 
-import { v4 as uuid } from 'uuid';
-import List from '../List';
 
-import { Grid, TextInput, Button, createStyles, Slider } from '@mantine/core';
+import { Grid, TextInput, Button, Text, createStyles, Slider, Card } from '@mantine/core';
+
+
 
 const styles = createStyles((theme) => ({
-  todoForm: {
-    backgroundColor: theme.colors.blue[6],
+  todo: {
+    backgroundColor: theme.colors.gray[8],
     color: theme.colors.gray[0],
-    height: '100%',
-    margin: 'auto',
-    display: 'flex',
-    flexFlow: 'row wrap',
-    gap: '10px',
-    fontSize: '16px',
-    boxSizing: 'border-box',
-    padding: theme.spacing.md,
+    fontSize: '20px',
+    fontWeight: 'bold',
+    margin: '16px auto',
+    padding: '16px',
+    width: '80%',
   }
 }));
 
 
 const Todo = () => {
-
-  const { classes } = styles(); // bring in styles from Mantine
+  const { classes } = styles(); // this needs to be in the function
 
   const [defaultValues] = useState({
-    difficulty: 4,
+    difficulty: 3,
   });
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem, defaultValues);
 
   function addItem(item) {
-    item.id = uuid();
-    item.complete = false;
-    console.log(item);
-    setList([...list, item]);
+    try {
+      const url = 'https://api-js401.herokuapp.com/api/v1/todo';
+      const method = 'post';
+      const data = item;
+      item.complete = false;
+      console.log(item);
+      // item.id = uuid();
+      axios({ url, method, data });
+      setList([...list, item]);
+
+    } catch (error) {
+      console.error('ERROR WHEN TRYING TO ADD ITEM', error);
+    }
   }
 
   function deleteItem(id) {
-    const items = list.filter( item => item.id !== id );
-    setList(items);
+    try {
+      axios.delete(`https://api-js401.herokuapp.com/api/v1/todo/${id}`);
+      const items = list.filter(item => item._id !== id);
+      setList(items);
+    } catch (error) {
+      console.error('ERROR WHEN TRYING TO DELETE ITEM', error);
+    }
   }
 
   function toggleComplete(id) {
+    try {
+      const items = list.map(item => {
+      const url = `https://api-js401.herokuapp.com/api/v1/todo/${id}`;
+      const method = 'put';
+      const data = { complete: !item.complete };
+      axios({ url, method, data });
+        if (item._id === id) {
+          item.complete = !item.complete;
+        }
+        return item;
+      });
 
-    const items = list.map( item => {
-      if ( item.id === id ) {
-        item.complete = ! item.complete;
-      }
-      return item;
-    });
+      setList(items);
 
-    setList(items);
+    } catch (error) {
+      console.error('ERROR WHEN TRYING TO TOGGLE COMPLETE', error);
+    }
 
   }
 
@@ -65,94 +87,75 @@ const Todo = () => {
     // linter will want 'incomplete' added to dependency array unnecessarily. 
     // disable code used to avoid linter warning 
     // eslint-disable-next-line react-hooks/exhaustive-deps 
-  }, [list]);  
+  }, [list]);
+
+  // this should trigger on page load to grab list of tasks from URL
+  useEffect(() => {
+    const getData = async () => {
+      let response = await axios.get('https://api-js401.herokuapp.com/api/v1/todo');
+
+      setList(response.data.results);
+    };
+    getData();
+  }, []);
+
 
   return (
     <>
-      <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
-      <Grid className={classes.todoForm}>
-        <form onSubmit={handleSubmit}>
-          <TextInput
-            onChange={handleChange}
-            name="text"
-            type="text"
-            placeholder="Item Details"
-          />
-          <TextInput
-            onChange={handleChange}
-            name="assignee"
-            type="text"
-            placeholder="Assignee Name"
-          />
-          <Slider
-            onChange={handleChange}
-            defaultValue={defaultValues.difficulty}
-            min={1}
-            max={5}
-            name="difficulty"
-          />
-          <Button type="submit">Add Item</Button>
-        </form>
+      <h1 data-testid="header-h1" className={classes.todo}>To Do List: {incomplete} items pending</h1>
+
+      <Grid>
+        <Auth capability="create">
+          <Grid.Col xs={12} sm={4}>
+            <Card shadow="sm" padding="md" margin="md" withBorder>
+              <form onSubmit={handleSubmit}>
+
+                <h2>Add To Do Item</h2>
+
+                <TextInput
+                  onChange={handleChange}
+                  name="text"
+                  type="text"
+                  placeholder="Item Details"
+                />
+
+                <TextInput
+                  onChange={handleChange}
+                  name="assignee"
+                  type="text"
+                  placeholder="Assignee Name"
+                />
+
+                <Text>Difficulty Rating</Text>
+                <Slider
+                  onChange={handleChange}
+                  defaultValue={defaultValues.difficulty}
+                  min={1}
+                  max={5}
+                  name="difficulty"
+                />
+
+                <Button radius="md" type="submit">Add Item</Button>
+              </form>
+            </Card>
+          </Grid.Col>
+        </Auth>
+        <Grid.Col xs={12} sm={8}>
+          {/* <Card shadow="sm" padding="md" margin="md"> */}
+          <List
+            deleteItem={deleteItem}
+            list={list}
+            toggleComplete={toggleComplete} />
+          {/* </Card> */}
+        </Grid.Col>
       </Grid>
-      <List
-        list={list}
-        handleComplete={toggleComplete}
-        handleDelete={deleteItem}
-      />
     </>
   );
 };
 
 
-  // return (
-  //   <>
-  //     <header data-testid="todo-header">
-  //       <h1 data-testid="todo-h1">To Do List: {incomplete} items pending</h1>
-  //     </header>
-
-  //     <form onSubmit={handleSubmit}> 
-  //     {/* leave the form code inside of the Todo Component */}
-  //     {/* DO NOT COMPONENTIZE BEFORE LAB 34 */}
-
-  //       <h2>Add To Do Item</h2>
-
-  //       <label>
-  //         <span>To Do Item</span>
-  //         <input onChange={handleChange} name="text" type="text" placeholder="Item Details" />
-  //       </label>
-
-  //       <label>
-  //         <span>Assigned To</span>
-  //         <input onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
-  //       </label>
-
-  //       <label>
-  //         <span>Difficulty</span>
-  //         <input onChange={handleChange} defaultValue={defaultValues.difficulty} type="range" min={1} max={5} name="difficulty" />
-  //       </label>
-
-  //       <label>
-  //         <button type="submit">Add Item</button>
-  //       </label>
-  //     </form>
-
-  //     {/* {list.map(item => (
-  //       <div key={item.id}>
-  //         <p>{item.text}</p>
-  //         <p><small>Assigned to: {item.assignee}</small></p>
-  //         <p><small>Difficulty: {item.difficulty}</small></p>
-  //         <div onClick={() => toggleComplete(item.id)}>Complete: {item.complete.toString()}</div>
-  //         <hr />
-  //       </div>
-  //     ))} */}
-
-  //     <List 
-  //       list={list}
-  //       toggleComplete={toggleComplete}
-  //     />
-
-  //   </>
-  // );
-// };
-
 export default Todo;
+
+
+
+

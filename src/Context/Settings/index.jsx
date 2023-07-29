@@ -1,41 +1,49 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // create context
-export const SettingsContext = React.createContext(); 
+export const SettingsContext = React.createContext();
+
 
 // create a provider
-function SettingsProvider({ children }){
-  const [pageItems, setPageItems] = React.useState(3);
-  const [displayCompleted, setDisplayCompleted] = React.useState(false);
-  const [sort, setSort] = React.useState('difficulty');
+function SettingsProvider({ children }) {
+  const [pageItems, setPageItems] = useState(3);
+  const [showCompleted, setShowCompleted] = useState(false);
+  const [sort, setSort] = useState('difficulty');
 
   // local storage
   const saveLocalStorage = () => {
-    localStorage.setItem('settings', JSON.stringify({ pageItems, displayCompleted, sort }));
-    localStorage.setItem('pageItems', JSON.stringify(pageItems));
-    localStorage.setItem('displayCompleted', JSON.stringify(displayCompleted));
+    localStorage.setItem('pageItems', JSON.stringify(+pageItems));//+pageItems converts string to number
+    localStorage.setItem('showCompleted', JSON.stringify(showCompleted));
     localStorage.setItem('sort', JSON.stringify(sort));
   };
 
-
   const values = {
     pageItems,
-    displayCompleted,
+    setPageItems,
+    showCompleted,
+    setShowCompleted,
     sort,
     setSort,
-    setPageItems,
-    setDisplayCompleted,
-    saveLocalStorage // add this to the values object
+    saveLocalStorage 
   }
 
-  React.useEffect(() => {
-    const settings = JSON.parse(localStorage.getItem('settings'));
-    if (settings) {
-      setPageItems(settings.pageItems);
-      setDisplayCompleted(settings.displayCompleted);
-      setSort(settings.sort);
-    }
-  }, []);
+
+  useEffect(() => { 
+  const localPageItems = localStorage.getItem('pageItems');
+  const localShowCompleted = localStorage.getItem('showCompleted');
+  const localSort = localStorage.getItem('sort');
+
+
+  if(localPageItems){
+    setPageItems(JSON.parse(localPageItems));
+  }
+  if(localShowCompleted){
+    setShowCompleted(JSON.parse(localShowCompleted));
+  }
+  if(localSort){
+    setSort(JSON.parse(localSort))
+  };
+}, []);
 
   return (
     <SettingsContext.Provider value={values}>

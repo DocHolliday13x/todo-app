@@ -1,8 +1,10 @@
-import { useContext, useState } from 'react';
-import { SettingsContext } from '../../Context/Settings';
-import { createStyles, Button, Card, TextInput, Text, Grid, NumberInput } from '@mantine/core';
+import { useContext, useState } from "react";
+import { SettingsContext } from "../../Context/Settings";
+import { createStyles, Button, Switch, TextInput, Text, Card } from "@mantine/core";
+import { NumberInput } from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
-import { Switch, When } from 'react-if'; // We have to bring this in with `npm i react-if` from react-if for our grid to display properly
+import { If, Then } from "react-if";
+
 
 const useStyles = createStyles((theme) => ({
   h1: {
@@ -12,98 +14,96 @@ const useStyles = createStyles((theme) => ({
   div: {
     display: 'flex',
     justifyContent: 'space-evenly',
-    padding: 'theme.spacing.md',
+    padding: theme.spacing.md,
   },
-  section: {
-    border: `1px solid ${theme.colors.gray[4]}`,
-    borderRadius: theme.radius.sm,
+  card: {
+    border: `1px solid gray`,
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    padding: 'theme.spacing.md',
+    padding: theme.spacing.md,
   }
 }));
 
 const SettingsForm = (event) => {
 
-  const { displayCompleted, setDisplayCompleted, sort, setSort, saveLocalStorage } = useContext(SettingsContext);
-  const { showUpdate, setShowUpdate } = useState(false); // We need to bring in useState from react to use this
+  const {
+    pageItems,
+    setPageItems,
+    showCompleted,
+    setShowCompleted,
+    sort,
+    setSort,
+    saveLocalStorage } = useContext(SettingsContext);
 
-  const classes = useStyles();
+  const [showUpdate, setShowUpdate] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+
+  const { classes } = useStyles();
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowUpdate(true); // populates the box for updated settings
     saveLocalStorage();
-    setShowUpdate(true);
   };
+
 
   return (
     <>
-
       <h1 className={classes.h1}><IconSettings /> Manage Settings </h1>
+      <div className={classes.div}>
+        <Card shadow="sm" padding="lg" radius="md" withBorder className={classes.card}>
+          <h3>Update Settings</h3>
+          <form onSubmit={handleSubmit} className={classes.form} >
 
-      <Grid style={{ width: '80%', margin: 'auto' }}>
-        <Grid.Col span={6}>
-          <Card withBorder>
-            <form onSubmit={handleSubmit} className={classes.form}>
-              <Text fontSize="xl" weight='bold'>Update Settings</Text>
-              <Switch
-                checked={displayCompleted}
-                onChange={(event) => setDisplayCompleted(event.currentTarget.checked)}
-                label="Show Completed Items"
-                m="sm"
-              />
-              <NumberInput
-                value={displayCompleted}
-                label="Items Per Page"
-                onChange={setDisplayCompleted}
-                />
-              <TextInput
+            <Switch
+              label="Show Completed?"
+              checked={showCompleted}
+              onChange={(event) => setShowCompleted(event.target.checked)}
+            />
+            
+            <NumberInput
+              name="pageItems"
+              label="Items Per Page"
+              placeholder={pageItems}
+              value={pageItems}
+              onChange={setPageItems}
+            />
+
+            <TextInput
+              label="Sort Keyword"
               placeholder={sort}
-                label="Sort Field"
-                onChange={(event) => setSort({ ...sort, field: event.currentTarget.value })}
-              />
-              <Button mt="sm" type="submit" variant="light" color="blue">Save Settings</Button>
-            </form>
+              value={sort}
+              onChange={(event) => setSort(event.target.value)}
+            />
+            
+            <Button type="submit">Update Settings</Button>
+          </form>
+        </Card>
+
+        <If condition={showUpdate}>
+          <Then>
+            <Card shadow="sm" padding="lg" radius="md" withBorder className={classes.card}>
+              {
+                showUpdate &&
+                <section className={classes.section}>
+                  <h3>Updated Settings</h3>
+                  <Text> Show Completed: {showCompleted ? 'yes' : 'no'}</Text>
+                  <Text> Items Per Page: {pageItems}</Text>
+                  <Text> Sort Keyword: {sort}</Text>
+                </section>
+              }
             </Card>
-        </Grid.Col>
-        <Grid.Col span={6}>
-          <Card withBorder>
-            <When condition={showUpdate}> {/* We need to bring in When from react-if to use this */}
-              <Text fontSize="xl" weight='bold'>Settings Saved!</Text>
-            </When>
+          </Then>
+        </If>
 
-            <When condition={!showUpdate}>
-              <Text fontSize="xl" weight='bold'>Update Settings</Text>
-              <Switch
-                checked={displayCompleted}
-                onChange={(event) => setDisplayCompleted(event.currentTarget.checked)}
-                label="Show Completed Items"
-                m="sm"
-              />
-              <NumberInput
-                value={displayCompleted}
-                label="Items Per Page"
-                onChange={setDisplayCompleted}
-                />
-              <TextInput
-              placeholder={sort}
-                label="Sort Field"
-                onChange={(event) => setSort({ ...sort, field: event.currentTarget.value })}
-              />
-              <Button mt="sm" type="submit" variant="light" color="blue">Save Settings</Button>
-            </When>
-          </Card>
-        </Grid.Col>
-      </Grid>
+      </div>
 
     </>
-
-  );
+  )
 };
-
 
 
 export default SettingsForm;

@@ -1,24 +1,16 @@
-import React from 'react';
 import { useContext } from 'react';
-import { AuthContext } from '../../Context/Auth/index.jsx';
-import { When } from 'react-if'; // npm i react-if
+import { AuthContext } from '../../Context/Auth';
+import { When } from 'react-if';
 
-function Auth ({ children, capability }) {
-  const context = useContext(AuthContext);
+function Auth ({ capability, children }){
+ const { isLoggedIn, can } = useContext(AuthContext);
 
-  let okToRender = false;
-
-  try {
-    okToRender =
-      context.loggedIn &&
-      (capability ? context.user.capabilities.includes(capability) : true);
-  } catch (e) {
-    console.warn('Not Authorized!');
-  }
-
-  return <When condition={okToRender}>{children}</When>;
+ return (
+  <When condition={isLoggedIn && can(capability)}>
+    {children}
+  </When>
+ )
 }
-
 
 export default Auth;
 
